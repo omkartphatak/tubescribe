@@ -2,12 +2,16 @@
 Extracts founder-specific insights: validation, tech stack, marketing, numbers.
 Uses requests directly to handle Qwen3.5 thinking mode.
 """
+import os
 import requests
 import json
+from dotenv import load_dotenv
 from database import get_connection
 
-API_URL = "http://localhost:1234/v1/chat/completions"
-MODEL = "mistralai/mistral-7b-instruct-v0.3"
+load_dotenv()
+
+API_URL = os.getenv("LM_STUDIO_URL", "http://localhost:1234/v1").rstrip("/") + "/chat/completions"
+MODEL = os.getenv("LM_STUDIO_MODEL", "qwen/qwen3.5-9b")
 
 
 FOUNDER_ANALYSIS_PROMPT = """You are analyzing a YouTube video from the Starter Story channel. This video features an interview with or story about a founder/developer who built a business or app.

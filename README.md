@@ -2,6 +2,8 @@
 
 100% local YouTube transcript scraper and analyzer. Extract, read, and analyze YouTube transcripts — powered by local AI.
 
+No API keys. No cloud. Everything runs on your machine.
+
 ## Features
 
 - **Transcript Extraction** — Fetch transcripts from any YouTube video or playlist. Falls back to Whisper for videos without captions.
@@ -15,29 +17,60 @@
 - **Q&A Chat** — Ask follow-up questions about any video's content.
 - **Export** — Copy analysis or download as Markdown.
 
-## Tech Stack
+## Requirements
 
-- **Frontend:** Streamlit
-- **LLM:** Qwen3.5-9B via LM Studio (localhost:1234)
-- **Database:** SQLite with FTS5
-- **Transcription:** youtube-transcript-api + Whisper fallback
-- **Metadata:** yt-dlp
+- **Python 3.9+**
+- **[LM Studio](https://lmstudio.ai/)** — running locally with any compatible model loaded
 
 ## Setup
 
-1. Install [LM Studio](https://lmstudio.ai/) and load `qwen/qwen3.5-9b`
-2. Start the LM Studio local server on port 1234
-3. Install dependencies:
+1. Clone the repo:
+
+```bash
+git clone https://github.com/omkartphatak-beep/tubescribe.git
+cd tubescribe
+```
+
+2. Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Run the app:
+> **Optional:** If you need Whisper fallback for videos without captions:
+> ```bash
+> pip install openai-whisper
+> ```
+
+3. Install [LM Studio](https://lmstudio.ai/) and load a model (e.g. `qwen/qwen3.5-9b`)
+
+4. Start the LM Studio local server (default port: 1234)
+
+5. **(Optional)** Configure your model and URL — copy `.env.example` to `.env` and edit:
+
+```bash
+cp .env.example .env
+```
+
+```env
+LM_STUDIO_URL=http://localhost:1234/v1
+LM_STUDIO_MODEL=qwen/qwen3.5-9b
+```
+
+6. Run the app:
 
 ```bash
 streamlit run app.py
 ```
+
+## Configuration
+
+| Environment Variable | Default | Description |
+|---|---|---|
+| `LM_STUDIO_URL` | `http://localhost:1234/v1` | LM Studio API endpoint |
+| `LM_STUDIO_MODEL` | `qwen/qwen3.5-9b` | Model identifier loaded in LM Studio |
+
+Set these in a `.env` file or export them in your shell.
 
 ## Project Structure
 

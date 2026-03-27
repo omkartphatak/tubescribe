@@ -4,6 +4,13 @@ import tempfile
 import yt_dlp
 from youtube_transcript_api import YouTubeTranscriptApi
 from openai import OpenAI
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Configurable via .env or environment variables
+LM_STUDIO_URL = os.getenv("LM_STUDIO_URL", "http://localhost:1234/v1")
+LM_STUDIO_MODEL = os.getenv("LM_STUDIO_MODEL", "qwen/qwen3.5-9b")
 
 
 def extract_video_id(url: str) -> str:
@@ -161,7 +168,7 @@ def identify_speakers(transcript: str, metadata: dict, client: OpenAI) -> str:
     channel = metadata.get("channel", "")
 
     response = client.chat.completions.create(
-        model="qwen/qwen3.5-9b",
+        model=LM_STUDIO_MODEL,
         max_tokens=4096,
         messages=[
             {
@@ -189,7 +196,7 @@ def generate_tags(transcript: str, metadata: dict, client: OpenAI) -> list[str]:
     channel = metadata.get("channel", "")
 
     response = client.chat.completions.create(
-        model="qwen/qwen3.5-9b",
+        model=LM_STUDIO_MODEL,
         max_tokens=2048,
         messages=[
             {
@@ -259,7 +266,7 @@ def extract_key_quotes(transcript: str, metadata: dict, client: OpenAI) -> str:
     )
 
     response = client.chat.completions.create(
-        model="qwen/qwen3.5-9b",
+        model=LM_STUDIO_MODEL,
         max_tokens=8192,
         messages=[
             {
@@ -286,9 +293,9 @@ Transcript:
     return (response.choices[0].message.content or "").strip()
 
 
-def get_client(base_url: str = "http://localhost:1234/v1") -> OpenAI:
+def get_client(base_url: str = None) -> OpenAI:
     """Create an OpenAI client pointing at LM Studio."""
-    return OpenAI(base_url=base_url, api_key="lm-studio")
+    return OpenAI(base_url=base_url or LM_STUDIO_URL, api_key="lm-studio")
 
 
 def truncate(text: str, max_chars: int = 12000) -> str:
@@ -356,7 +363,7 @@ def analyze_transcript(transcript: str, client: OpenAI, detail_level: str = "Sta
     )
 
     response = client.chat.completions.create(
-        model="qwen/qwen3.5-9b",
+        model=LM_STUDIO_MODEL,
         max_tokens=16384,
         messages=[{"role": "user", "content": prompt}],
     )
@@ -379,7 +386,7 @@ Transcript:
     messages = [{"role": "system", "content": system}] + chat_history + [{"role": "user", "content": question}]
 
     response = client.chat.completions.create(
-        model="qwen/qwen3.5-9b",
+        model=LM_STUDIO_MODEL,
         max_tokens=8192,
         messages=messages,
     )

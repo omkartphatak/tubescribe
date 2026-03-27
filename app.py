@@ -5,6 +5,7 @@ from transcript_agent import (
     ask_question, get_client, fetch_video_metadata, identify_speakers,
     fetch_playlist_urls, is_playlist_url, export_markdown,
     generate_tags, extract_key_quotes, DETAIL_LEVELS,
+    LM_STUDIO_MODEL,
 )
 from database import (
     save_video, search_videos, list_all_videos, get_video, delete_video, count_videos,
@@ -324,7 +325,8 @@ with st.sidebar:
         st.rerun()
 
     st.markdown("---")
-    st.markdown('<div class="badge">Qwen3.5 via LM Studio</div>', unsafe_allow_html=True)
+    model_short = LM_STUDIO_MODEL.split("/")[-1] if "/" in LM_STUDIO_MODEL else LM_STUDIO_MODEL
+    st.markdown(f'<div class="badge">{model_short} via LM Studio</div>', unsafe_allow_html=True)
 
     # --- Library ---
     st.markdown("---")

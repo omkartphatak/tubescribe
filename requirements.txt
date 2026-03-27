@@ -3,4 +3,7 @@ openai
 python-dotenv
 streamlit
 yt-dlp
-openai-whisper
+requests
+
+# Optional: only needed if YouTube captions are unavailable (pulls in PyTorch)
+# openai-whisper
