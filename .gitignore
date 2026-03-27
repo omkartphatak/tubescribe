@@ -1,0 +1,11 @@
+.env
+__pycache__/
+*.pyc
+.streamlit/
+*.db
+*.txt
+*.md
+!requirements.txt
+!README.md
+.claude/
+.DS_Store

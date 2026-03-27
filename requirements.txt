@@ -1,0 +1,6 @@
+youtube-transcript-api
+openai
+python-dotenv
+streamlit
+yt-dlp
+openai-whisper
