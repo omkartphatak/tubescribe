@@ -408,13 +408,15 @@ if fetch_btn and url:
         try:
             with st.spinner("Fetching playlist videos..."):
                 videos = fetch_playlist_urls(url)
+            if not videos:
+                st.warning("No videos found in this playlist.")
             st.session_state.playlist_results = []
             st.session_state.transcript = None
             st.session_state.analysis = None
             st.session_state.metadata = None
             st.session_state.speakers = None
 
-            progress = st.progress(0, text="Processing playlist...")
+            progress = st.progress(0, text="Processing playlist...") if videos else None
             for i, video in enumerate(videos):
                 progress.progress((i + 1) / len(videos), text=f"Processing {i + 1}/{len(videos)}: {video['title'][:50]}...")
                 try:

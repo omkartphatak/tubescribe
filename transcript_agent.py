@@ -135,6 +135,14 @@ def fetch_video_metadata(url: str) -> dict:
 
 def fetch_playlist_urls(playlist_url: str) -> list[dict]:
     """Extract all video URLs and titles from a YouTube playlist."""
+    # Normalize to pure playlist URL — other formats return 0 entries with extract_flat
+    show_match = re.search(r'/show/VL(PL[a-zA-Z0-9_-]+)', playlist_url)
+    list_match = re.search(r'list=([a-zA-Z0-9_-]+)', playlist_url)
+    if show_match:
+        playlist_url = f"https://www.youtube.com/playlist?list={show_match.group(1)}"
+    elif list_match:
+        playlist_url = f"https://www.youtube.com/playlist?list={list_match.group(1)}"
+
     ydl_opts = {
         "quiet": True,
         "no_warnings": True,
@@ -157,8 +165,12 @@ def fetch_playlist_urls(playlist_url: str) -> list[dict]:
 
 
 def is_playlist_url(url: str) -> bool:
-    """Check if a URL is a YouTube playlist."""
-    return "list=" in url and ("playlist" in url or "list=" in url)
+    """Check if a URL is a YouTube playlist (including /show/VL... format)."""
+    if "list=" in url:
+        return True
+    if re.search(r'/show/VL[a-zA-Z0-9_-]+', url):
+        return True
+    return False
 
 
 def identify_speakers(transcript: str, metadata: dict, client: OpenAI) -> str:
