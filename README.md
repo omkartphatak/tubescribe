@@ -13,7 +13,7 @@ No API keys. No cloud. Everything runs on your machine.
 - **Searchable Library** — SQLite + FTS5 full-text search across all saved transcripts and insights.
 - **Auto-Tagging** — LLM-generated topic tags for every video.
 - **Collections** — Organize videos into custom groups (e.g. "Tech Talks", "Marketing").
-- **Playlist Support** — Batch-process entire playlists with progress tracking.
+- **Playlist Support** — Batch-process entire playlists with progress tracking. Handles all YouTube URL formats including `/show/`, `watch?v=...&list=...`, and standard playlist links.
 - **Q&A Chat** — Ask follow-up questions about any video's content.
 - **Export** — Copy analysis or download as Markdown.
 
@@ -27,7 +27,7 @@ No API keys. No cloud. Everything runs on your machine.
 1. Clone the repo:
 
 ```bash
-git clone https://github.com/omkartphatak-beep/tubescribe.git
+git clone https://github.com/omkartphatak/tubescribe.git
 cd tubescribe
 ```
 
