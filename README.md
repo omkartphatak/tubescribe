@@ -4,6 +4,8 @@
 
 No API keys. No cloud. Everything runs on your machine.
 
+![TubeScribe](screenshot.png)
+
 ## Features
 
 - **Transcript Extraction** — Fetch transcripts from any YouTube video or playlist. Falls back to Whisper for videos without captions.
