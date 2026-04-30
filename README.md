@@ -89,4 +89,4 @@ whisper_batch.py    — Batch Whisper transcription
 
 ## License
 
-MIT
+AGPL-3.0-only
